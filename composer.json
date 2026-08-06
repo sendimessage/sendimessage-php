@@ -1,0 +1,20 @@
+{
+    "name": "sendimessage/sdk",
+    "description": "SendiMessage SDK — send iMessage/SMS through the SendiMessage API",
+    "keywords": ["imessage", "sms", "messaging", "sendimessage"],
+    "homepage": "https://sendimessage.com",
+    "support": {
+        "source": "https://github.com/sendimessage/sendimessage-php"
+    },
+    "license": "MIT",
+    "require": {
+        "php": ">=8.1",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "SendImessage\\": "src/"
+        }
+    }
+}
