@@ -223,8 +223,8 @@ $state = $client->getCallForwarding($lineHandle);        // current + pending
 Conversations group the message history per contact:
 
 ```php
-$convos = $client->listConversations(['limit' => 20]);
-$msgs = $client->listConversationMessages($conversationHandle, ['limit' => 50]);
+$convos = $client->listConversations(['per_page' => 20]);
+$msgs = $client->listConversationMessages($conversationHandle, ['per_page' => 50]);
 $client->markConversationRead($conversationHandle);
 ```
 
@@ -346,3 +346,13 @@ Full HTTP-level reference: the [Postman collection](https://sendimessage.com/pos
 ## License
 
 [MIT](LICENSE)
+
+### Forcing SMS
+
+By default the Mac tries iMessage and falls back to SMS when Apple reports the number has no iMessage. Pass `service: 'sms'` to send a plain text message straight away (or `'imessage'` to insist on the default path):
+
+```php
+$client->sendMessage('+15551234567', content: 'Your code is 1234', service: 'sms');
+```
+
+`$client->me()` returns the user + company behind the key pair — the cheapest way to verify credentials.

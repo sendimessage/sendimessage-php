@@ -13,6 +13,7 @@ namespace SendImessage;
 class Client
 {
     public const DEFAULT_BASE_URL = 'https://api.sendimessage.com/v1';
+    public const VERSION = '0.1.1';
 
     private string $baseUrl;
 
@@ -41,6 +42,7 @@ class Client
         ?string $lineHandle = null,
         ?string $statusCallback = null,
         ?string $scheduledAt = null,
+        ?string $service = null,
     ): array {
         return $this->request('POST', '/send-message', json: self::prune([
             'number' => $number,
@@ -49,7 +51,15 @@ class Client
             'line_handle' => $lineHandle,
             'status_callback' => $statusCallback,
             'scheduled_at' => $scheduledAt,
+            // 'sms' = plain text message, no iMessage attempt; 'imessage' = default path
+            'service' => $service,
         ]));
+    }
+
+    /** The user + company behind these credentials (GET /me). */
+    public function me(): array
+    {
+        return $this->request('GET', '/me');
     }
 
     public function getStatus(string $messageHandle): array
@@ -248,7 +258,7 @@ class Client
             'X-API-Key: ' . $this->apiKey,
             'X-API-Secret: ' . $this->apiSecret,
             'Accept: application/json',
-            'User-Agent: sendimessage-php/0.1.0',
+            'User-Agent: sendimessage-php/' . self::VERSION,
         ];
 
         $ch = curl_init($url);
